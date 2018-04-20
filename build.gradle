@@ -1,0 +1,79 @@
+group 'com.baomidou'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+//apply plugin: 'maven-deploy'
+apply plugin: 'maven-publish'
+apply plugin: 'propdeps'
+apply plugin: 'propdeps-idea'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "http://www.cameliatk.jp/maven2/repository/thirdparty" }
+    jcenter()
+}
+
+
+dependencies {
+    compile "com.baomidou:mybatis-plus:2.2.0"
+    compile "io.shardingjdbc:sharding-jdbc-core-spring-boot-starter:2.0.3"
+    compile "org.springframework.boot:spring-boot-autoconfigure:1.5.10.RELEASE"
+    compile "org.springframework.boot:spring-boot-configuration-processor:1.5.10.RELEASE"
+    provided "org.springframework.boot:spring-boot-starter:1.5.10.RELEASE"
+    optional "org.springframework.boot:spring-boot-starter-jdbc:1.5.10.RELEASE"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+
+artifacts {
+    archives sourcesJar
+}
+
+
+buildscript {
+    repositories {
+        maven { url "https://repo.spring.io/plugins-release" }
+    }
+    dependencies {
+        classpath("org.springframework.build.gradle:propdeps-plugin:0.0.7")
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            //指定group/artifact/version信息，可以不填。默认使用项目group/name/version作为groupId/artifactId/version
+            groupId project.group
+            artifactId project.name
+            version project.version
+            //如果是war包填写components.web，如果是jar包填写components.java
+            from components.java
+
+//            //配置上传源码
+//            artifact sourceJar {
+//                classifier "sources"
+//            }
+
+        }
+    }
+    repositories {
+        maven {
+            //指定要上传的maven私服仓库
+            url = "http://36.110.113.132:8081/nexus/content/repositories/snapshots/"
+            //认证用户和密码
+            credentials {
+                username 'admin'
+                password 'admin123'
+            }
+        }
+    }
+}
