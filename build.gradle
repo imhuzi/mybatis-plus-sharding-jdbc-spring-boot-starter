@@ -48,32 +48,3 @@ buildscript {
     }
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            //指定group/artifact/version信息，可以不填。默认使用项目group/name/version作为groupId/artifactId/version
-            groupId project.group
-            artifactId project.name
-            version project.version
-            //如果是war包填写components.web，如果是jar包填写components.java
-            from components.java
-
-//            //配置上传源码
-//            artifact sourceJar {
-//                classifier "sources"
-//            }
-
-        }
-    }
-    repositories {
-        maven {
-            //指定要上传的maven私服仓库
-            url = "http://36.110.113.132:8081/nexus/content/repositories/snapshots/"
-            //认证用户和密码
-            credentials {
-                username 'admin'
-                password 'admin123'
-            }
-        }
-    }
-}
