@@ -1,5 +1,5 @@
 group 'com.baomidou'
-version '1.0-SNAPSHOT'
+version '1.1-SNAPSHOT'
 
 apply plugin: 'java'
 //apply plugin: 'maven-deploy'
@@ -19,7 +19,7 @@ repositories {
 
 
 dependencies {
-    compile "com.baomidou:mybatis-plus:2.2.0"
+    compile "com.baomidou:mybatis-plus:2.3"
     compile "io.shardingjdbc:sharding-jdbc-core-spring-boot-starter:2.0.3"
     compile "org.springframework.boot:spring-boot-autoconfigure:1.5.10.RELEASE"
     compile "org.springframework.boot:spring-boot-configuration-processor:1.5.10.RELEASE"
